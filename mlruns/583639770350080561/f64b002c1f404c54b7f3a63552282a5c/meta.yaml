@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Intel_docs/Intel_docs/Education_saurabh/Sem2/ML_Models/Code/handwritten_digit_recog_by_MlopsCommanders/mlruns/583639770350080561/f64b002c1f404c54b7f3a63552282a5c/artifacts
+end_time: 1739187243554
+entry_point_name: ''
+experiment_id: '583639770350080561'
+lifecycle_stage: active
+run_id: f64b002c1f404c54b7f3a63552282a5c
+run_name: likeable-worm-129
+run_uuid: f64b002c1f404c54b7f3a63552282a5c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1739186950614
+status: 3
+tags: []
+user_id: Saurabh Sharma

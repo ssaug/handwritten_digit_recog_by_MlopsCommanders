@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwritten Digit Recognition</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; padding: 20px; background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        pre { background: #eee; padding: 10px; border-radius: 5px; }
+        code { font-size: 14px; }
+        img { max-width: 100%; display: block; margin: 10px auto; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Handwritten Digit Recognition Using Ensemble Method</h1>
+        <h2>By MlopsCommanders</h2>
+        <p>This project provides a REST API for recognizing handwritten digits using an ensemble of machine learning models.</p>
+
+        <h3>How to Use the API</h3>
+
+        <h4>1. Get Model Parameters</h4>
+        <p>Use this endpoint to retrieve the parameters of the trained models.</p>
+        <pre><code>
+GET http://localhost:5000/best_model_parameters
+        </code></pre>
+        <img src="best_model_params_example.png" alt="Model Parameters Example">
+
+        <h4>2. Predict a Handwritten Digit</h4>
+        <p>Send an image's feature vector (28x28 normalized pixel values) to predict the digit.</p>
+        <pre><code>
+POST http://localhost:5000/predict
+Content-Type: application/json
+
+{
+    "features": [[0.0, 0.1, 0.2, ..., 0.9, 1.0, 0.0]]
+}
+        </code></pre>
+        <img src="predict_example.png" alt="Prediction Example">
+
+        <h4>3. Train the Model</h4>
+        <p>Send new training data to retrain the ensemble models.</p>
+        <pre><code>
+POST http://localhost:5000/train
+Content-Type: application/json
+
+{
+    "features": [
+        [0.1, 0.2, ..., 0.9],
+        [0.5, 0.6, ..., 0.3]
+    ],
+    "labels": [5, 3]
+}
+        </code></pre>
+        <img src="train_example.png" alt="Training Example">
+
+        <h3>Experiment Results</h3>
+        <h4>Example Input for Prediction API Call:</h4>
+        <pre><code>
+{
+    "features": [
+        [0.00, 0.00, 0.33, 0.73, 0.62, ..., 1.00, 1.00, 0.47]
+    ]
+}
+        </code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>
+{
+    "predictions": [7]
+}
+        </code></pre>
+        <img src="prediction_result.png" alt="Prediction Result">
+
+        <h4>Example Input for Training API Call:</h4>
+        <pre><code>
+{
+    "features": [
+        [0.00, 0.00, 0.33, 0.73, 0.62, ..., 1.00, 1.00, 0.47],
+        [1.00, 1.00, 1.00, 1.00, 1.00, ..., 1.00, 1.00, 1.00]
+    ],
+    "labels": [7, 2]
+}
+        </code></pre>
+        <img src="training_result.png" alt="Training Result">
+    </div>
+</body>
+</html>

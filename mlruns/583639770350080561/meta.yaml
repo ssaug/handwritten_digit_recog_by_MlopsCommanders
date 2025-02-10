@@ -1,0 +1,6 @@
+artifact_location: file:///D:/Intel_docs/Intel_docs/Education_saurabh/Sem2/ML_Models/Code/handwritten_digit_recog_by_MlopsCommanders/mlruns/583639770350080561
+creation_time: 1739126497207
+experiment_id: '583639770350080561'
+last_update_time: 1739126497207
+lifecycle_stage: active
+name: MNIST_Ensemble_Classification
