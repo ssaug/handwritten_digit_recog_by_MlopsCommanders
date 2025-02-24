@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
 ##import cv2
@@ -21,6 +21,9 @@ best_dt = ensemble_model["DecisionTree"]
 
 app = Flask(__name__)
 
+@app.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
 
 @app.route("/best_model_parameters", methods=["GET"])
 def get_best_model_parameters():
