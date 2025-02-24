@@ -8,6 +8,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import accuracy_score
 import pickle
+from scipy.stats import mode
 
 # Set MLflow experiment
 mlflow.set_experiment("MNIST_Ensemble_Classification")
@@ -67,14 +68,17 @@ with mlflow.start_run():
     mlflow.log_params({"svm_best_params": svm_search.best_params_})
     mlflow.log_params({"dt_best_params": dt_search.best_params_})
 
-    # Make predictions
-    rf_pred = best_rf.predict_proba(X_test)
-    svm_pred = best_svm.predict_proba(X_test)
-    dt_pred = best_dt.predict_proba(X_test)
+    # Make predictions and generate labels
+    rf_pred = best_rf.predict(X_test)
+    svm_pred = best_svm.predict(X_test)
+    dt_pred = best_dt.predict(X_test)
 
     # Average predictions for ensemble
-    ensemble_pred = (rf_pred + svm_pred + dt_pred) / 3
-    y_pred_final = np.argmax(ensemble_pred, axis=1)
+    # Stack predictions into a 2D array
+    predictions = np.vstack((rf_pred, svm_pred, dt_pred)).T  # Shape: (n_samples, n_classifiers)
+
+    # Apply majority voting
+    y_pred_final = mode(predictions, axis=1).mode.flatten()
 
     # Evaluate performance
     final_accuracy = accuracy_score(y_test, y_pred_final)
