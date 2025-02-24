@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
+from scipy.stats import mode
 
 # Load the saved ensemble model
 model_path = "./model/ensemble_model.pkl"
@@ -46,14 +47,16 @@ def predict():
     #plt.axis("off")
     #plt.show()
 
-    # Get predictions from each model
-    rf_pred = best_rf.predict_proba(X_input)
-    svm_pred = best_svm.predict_proba(X_input)
-    dt_pred = best_dt.predict_proba(X_input)
+    # Make predictions and generate labels
+    rf_pred = best_rf.predict(X_test)
+    svm_pred = best_svm.predict(X_test)
+    dt_pred = best_dt.predict(X_test)
 
-    # Compute ensemble prediction
-    ensemble_pred = (rf_pred + svm_pred + dt_pred) / 3
-    y_pred = np.argmax(ensemble_pred, axis=1)
+    # Stack predictions into a 2D array
+    predictions = np.vstack((rf_pred, svm_pred, dt_pred)).T  # Shape: (n_samples, n_classifiers)
+
+    # Apply majority voting
+    y_pred = mode(predictions, axis=1).mode.flatten()
 
     return jsonify({"predictions": y_pred.tolist()})
 
