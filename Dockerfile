@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the API port
-EXPOSE 8000
+EXPOSE 5003
 
 # Command to run the API
 CMD ["python", "app.py"]

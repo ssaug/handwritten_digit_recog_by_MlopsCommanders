@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import pickle
 import numpy as np
-import cv2
+##import cv2
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
