@@ -24,10 +24,22 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def index():
+    """
+    Render the index page.
+
+    Returns:
+        str: Rendered HTML template for the index page.
+    """
     return render_template("index.html")
 
 @app.route("/best_model_parameters", methods=["GET"])
 def get_best_model_parameters():
+    """
+    Get the parameters of the best models in the ensemble.
+
+    Returns:
+        dict: JSON object containing the parameters of RandomForest, SVM, and DecisionTree models.
+    """
     best_params = {
         "RandomForest": best_rf.get_params(),
         "SVM": best_svm.get_params(),
@@ -38,6 +50,12 @@ def get_best_model_parameters():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    """
+    Predict the class labels for the provided feature vectors using the ensemble model.
+
+    Returns:
+        dict: JSON object containing the predicted class labels.
+    """
     data = request.json["features"]  # Expecting a list of feature vectors
     X_input = np.array(data)
 
@@ -66,6 +84,12 @@ def predict():
 
 @app.route("/train", methods=["POST"])
 def train():
+    """
+    Retrain the models using the provided feature vectors and labels.
+
+    Returns:
+        dict: JSON object containing a message indicating successful retraining and saving of the model.
+    """
     data = request.json
     X_train = np.array(data["features"])
     y_train = np.array(data["labels"])
